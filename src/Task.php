@@ -4,11 +4,13 @@ namespace Quadrogod\Cron;
 
 abstract class Task {
     
+    use CronTrait;
+    
     protected $_params = [];
     private $action = '';
 
-    public function __construct($params = []) {       
-        //
+    public function __construct($params = []) 
+    {              
         $this->action = 'action_' . (( !empty($params['action']) ) ? mb_strtolower($params['action']) : 'default' );
         
         if ( ! method_exists($this, $this->action)) {
@@ -20,7 +22,8 @@ abstract class Task {
 
     abstract public function action_default();
     
-    public function execute() {        
+    public function execute() 
+    {        
         return $this->{$this->action}();
     }
 }
