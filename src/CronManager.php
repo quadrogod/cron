@@ -4,7 +4,7 @@ namespace Quadrogod\Cron;
 
 abstract class CronManager {
     
-    use CronTrait;
+    use \Quadrogod\Helpers\InputTrait;
     
     /**
      * 
@@ -16,7 +16,7 @@ abstract class CronManager {
     {
         // get Params
         if ( ($params === null) OR ! is_array($params) ) {
-            $params = static::getParams();
+            $params = static::getInputParams();
         }
         // get Task Name OR Default
         if ( ($task === null) OR ! is_string($task) ) {

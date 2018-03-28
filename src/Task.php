@@ -4,15 +4,14 @@ namespace Quadrogod\Cron;
 
 abstract class Task {
     
-    use CronTrait;
-    
-    protected $_params = [];
+    use \Quadrogod\Helpers\InputTrait;
+        
     private $action = '';
 
     public function __construct($params = []) 
     {              
         $this->action = 'action_' . (( !empty($params['action']) ) ? mb_strtolower($params['action']) : 'default' );
-        $this->_params = $params; //@todo: добавить getParam($name, $default) и hasParam($name)
+        $this->inputParams = $this->inputParams + (is_array($params) && count($params)) ? $params : []; 
 		
         if ( ! method_exists($this, $this->action)) {
             throw new \Exception('Action \'' . $this->action . '\' NOT declared in Class \'' . static::class . '\'');
